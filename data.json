@@ -1,32 +1,38 @@
 [
   {
+    "id": "1",
     "img": "https://4menshop.com/images/thumbs/2023/07/ao-polo-soc-ngang-phoi-co-form-regular-po114-mau-trang-18136-slide-products-64af60238fbd6.JPG",
     "name": "Áo Polo Màu Trắng",
-    "price": "375.000đ"
+    "price": 375.000
   },
   {
+    "id": "2",
     "img": "https://4menshop.com/cache/image/300x400/images/thumbs/2023/07/_small-18135.JPG",
     "name": "Áo Polo Màu Đen",
-    "price": "375.000đ"
+    "price": 375.000
   },
   {
+    "id": "3",
     "img": "https://4menshop.com/cache/image/300x400/images/thumbs/2023/07/ao-polo-mat-chim-theu-smile-flower-form-slimfit-po113-mau-nau_small-18133.JPG",
     "name": "Áo Polo Màu Nâu",
-    "price": "345.000đ"
+    "price": 345.000
   },
   {
+    "id": "4",
     "img": "https://4menshop.com/cache/image/300x400/images/thumbs/2023/07/ao-polo-mat-chim-theu-smile-flower-form-slimfit-po113_small-18132.JPG",
     "name": "Áo Polo Màu Đen",
-    "price": "345.000đ"
+    "price": 345.000
   },
   {
+    "id": "5",
     "img": "https://4menshop.com/cache/image/300x400/images/thumbs/2023/07/ao-polo-regular-tag-line-po087-mau-xanh-co-vit_small-18123.jpg",
     "name": "Áo Polo Màu Xanh Cổ Vịt",
-    "price": "315.000đ"
+    "price": 315.000
   },
   {
+    "id": "6",
     "img": "https://4menshop.com/cache/image/300x400/images/thumbs/2023/07/ao-polo-regular-tag-line-po087-mau-xanh-bich_small-18122.jpg",
     "name": "Áo Polo Xanh Bích",
-    "price": "315.000đ"
+    "price": 315.000
   }
 ]

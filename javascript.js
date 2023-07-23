@@ -142,7 +142,7 @@ hangMoiVe.innerHTML = "HÀNG MỚI VỀ"
 center_nabar.appendChild(hangMoiVe)
 
 let aoNam = document.createElement('p')
-aoNam.style.width = "100px"; 
+aoNam.style.width = "100px";
 aoNam.style.fontSize = "15px"
 aoNam.style.margin = "30px 0px"
 aoNam.innerHTML = "ÁO NAM"
@@ -188,12 +188,183 @@ let iconNabarStyle = {
 Object.assign(iconNabar.style, iconNabarStyle)
 son_nabar.appendChild(iconNabar)
 
+
+// Cart
 let iconCart = document.createElement('i')
 iconCart.classList.add("fa-sharp", "fa-solid", "fa-cart-shopping");
 iconCart.style.fontSize = "15px"
 iconCart.style.color = "#641E16"
 iconCart.style.marginRight = "10px"
 iconNabar.appendChild(iconCart)
+
+let overlayElement = document.createElement('div');
+let overlayElementStyle = {
+  position: "fixed",
+  display: "none",
+  width: "100%",
+  height: "100%",
+  top: "0",
+  left: "0",
+  right: "0",
+  bottom: "0",
+  backgroundColor: "rgba(0,0,0,0.5)",
+  zIndex: "2",
+  cursor: "pointer",
+};
+Object.assign(overlayElement.style,overlayElementStyle)
+overlayElement.onclick = off;
+container.appendChild(overlayElement);
+
+
+let cartDiv = document.createElement('div');
+let carDivStyle = {
+  border: "1px solid black",
+  width: "800px",
+  height: "400px",
+  backgroundColor: "white",
+  position: "fixed", // Sử dụng position: fixed để căn giữa phần tử
+  top: "50%", // Đưa phần tử vào giữa theo trục dọc
+  left: "50%", // Đưa phần tử vào giữa theo trục ngang
+  transform: "translate(-50%, -50%)", // Dịch chuyển phần tử để căn giữa hoàn toàn
+  msTransform: "translate(-50%, -50%)",
+}
+Object.assign(cartDiv.style, carDivStyle);
+overlayElement.appendChild(cartDiv)
+
+//Update item in cart
+function updateCartDiv() {
+  cartDiv.innerHTML = "";
+  cart.forEach((item) => {
+    let itemDiv = document.createElement('div');
+    let itemDivStyle = {
+      pointEvents : "none",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: 'space-between',
+      padding: "5px",
+      borderBottom: "1px solid #ccc"
+    }
+
+    Object.assign(itemDiv.style, itemDivStyle);
+
+    let itemImg = document.createElement('img')
+    itemImg.src = item.img;
+    itemImg.style.width = "50px";
+    itemImg.style.height = "50px";
+
+
+    let itemName = document.createElement('p');
+    itemName.innerHTML = item.name;
+    itemName.style.marginRight = "10px";
+
+    let itemPrice = document.createElement('p');
+    itemPrice.innerHTML = item.price;
+
+    let itemQuantity = document.createElement('p');
+    itemQuantity.innerHTML = "Quantity: " + item.quantity;
+
+    itemDiv.appendChild(itemImg);
+    itemDiv.appendChild(itemName);
+    itemDiv.appendChild(itemPrice);
+    itemDiv.appendChild(itemQuantity);
+
+    cartDiv.appendChild(itemDiv);
+  })
+
+  //Sum
+  let totalDiv = document.createElement('div');
+  let totalDivStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "5px",
+    borderTop: "1px solid #ccc",
+    fontWeight: "bold",
+  };
+  Object.assign(totalDiv.style, totalDivStyle);
+
+  let totalText = document.createElement('p');
+  totalText.innerText = "Tổng Tiền:";
+
+  let totalAmount = document.createElement('p');
+  totalAmount.innerText = calculateTotal();
+
+  totalDiv.appendChild(totalText);
+  totalDiv.appendChild(totalAmount);
+
+  // Thêm totalDiv vào cartDiv
+  cartDiv.appendChild(totalDiv);
+
+}
+
+//closeButton
+let closeButton = document.createElement("button");
+closeButton.innerText = 'X';
+
+let closeButtonStyle = {
+  position: 'absolute',
+  top: '140px',
+  right: '330px',
+  backgroundColor: 'transparent',
+  border: '2px solid white',
+  borderRadius: '100%',
+  fontSize: '20px',
+  color: 'white',
+  cursor: 'pointer',
+};
+
+Object.assign(closeButton.style, closeButtonStyle);
+
+closeButton.onclick = off;
+
+overlayElement.appendChild(closeButton);
+
+
+//payButton
+let payButton = document.createElement('button');
+
+payButton.innerText = 'Thanh Toán';
+let payButtonStyle = {
+  position: 'absolute',
+  bottom: '130px',
+  left: '670px',
+  backgroundColor: 'transparent',
+  border: '2px solid white',
+  borderRadius: '30px',
+  fontSize: '20px',
+  color: 'white',
+  cursor: 'pointer',
+};
+
+Object.assign(payButton.style, payButtonStyle);
+
+payButton.addEventListener("click", () => {
+  pay();
+})
+
+overlayElement.appendChild(payButton);
+
+
+
+
+iconCart.onclick = on;
+function on() {
+  overlayElement.style.display = 'block';
+}
+
+function off(event) {
+  if (event.target === closeButton) {
+    overlayElement.style.display = 'none';
+  }
+}
+
+
+
+
+
+
+
+
 
 let iconSearch = document.createElement('i')
 iconSearch.classList.add("fa-solid", "fa-magnifying-glass")
@@ -234,8 +405,6 @@ Object.assign(main.style, mainStyle)
 
 
 
-
-//title in main
 let title = document.createElement('div')
 let titleStyle = {
   with: "100%",
@@ -297,8 +466,9 @@ Object.assign(items.style, itemsStyle)
 content.appendChild(items)
 
 
-
+// ADD TO CART
 for (let i = 0; i < myJson.length; i++) {
+  let shirt = myJson[i];
   let cart = document.createElement('div')
   let cartStyle = {
     width: "30%",
@@ -342,8 +512,71 @@ for (let i = 0; i < myJson.length; i++) {
   cart.appendChild(name)
   cart.appendChild(price)
   items.appendChild(cart)
+
+  cart.addEventListener("click", () => {
+    addToCart(shirt);
+  })
 }
 
+class Shirt {
+  /**
+   * @param {string} id
+   * @param {string} name
+   * @param {number} price
+   */
+  constructor(id, name, price) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+  }
+}
+/**@type {Shirt[]} */
+let cart = [];
+
+function addToCart(shirt) {
+  let index = cart.findIndex((item) => {
+    return item.id == shirt.id;
+  });
+  if (index != -1) {
+    cart[index].quantity++;
+    console.log(cart);
+  } else {
+    cart.push({
+      id: shirt.id,
+      img: shirt.img,
+      name: shirt.name, 
+      price: shirt.price,
+      quantity: 1,
+    });
+    console.log(cart);
+  }
+  
+  updateCartDiv(); // Cập nhật nội dung của cartDiv sau khi thêm item vào cart
+  return;
+}
+
+function calculateTotal() {
+  let total = 0;
+  cart.forEach((item) => {
+    myJson.forEach((shirt) => {
+      if (shirt.id == item.id) {
+        total += shirt.price * item.quantity;
+      }
+    });
+  });
+  return total;
+}
+
+function pay() {
+  if (cart.length == 0) {
+    alert("Chưa có đồ nào trong giỏ hàng");
+  } else {
+    let total = calculateTotal();
+    alert("Tổng Tiền là: " + total);
+    cart = [];
+    updateCartDiv(); // Để xóa mọi mặt hàng sau khi đã thanh toán
+  }
+}
 
 
 
@@ -437,6 +670,7 @@ aside.appendChild(itemsListHot)
 
 
 for (let i = 0; i < myJson.length; i++) {
+  let shirt = myJson[i];
   let cartHot = document.createElement('div')
   let cartHotStyle = {
     display: "flex",
@@ -456,7 +690,7 @@ for (let i = 0; i < myJson.length; i++) {
   img.style.marginBottom = "5px"
   img.style.marginLeft = "25px"
   img.style.border = "3px solid #D7DBDD";
-   
+
 
   let name = document.createElement('p')
   name.innerHTML = myJson[i].name
@@ -480,6 +714,10 @@ for (let i = 0; i < myJson.length; i++) {
   cartHot.appendChild(img);
   cartHot.appendChild(infoContainer);
   itemsListHot.appendChild(cartHot);
+
+  cartHot.addEventListener("click", () => {
+    addToCart(shirt);
+  })
 }
 
 
